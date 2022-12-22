@@ -1,0 +1,14 @@
+{
+  "name": "@nlp-manager/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "dist": "rm -rf ./dist && rm *.tsbuildinfo || true && mkdir dist && tsc --build",
+    "dev": "tsc --build --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
