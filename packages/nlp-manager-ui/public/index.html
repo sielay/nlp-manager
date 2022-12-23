@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bp4-dark">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -26,13 +26,17 @@
     -->
     <title>React App</title>
     <script>
+      // for issues in colorette and path-browserify
+      window.process = window.process = { env: {}, cwd: function() {
+        return location.pathname;
+      } };
       window.youshould = {
         apiHost: '%API_HOST%',
         apiPort: '%API_PORT%'
       };
     </script>
   </head>
-  <body>
+  <body class="bp4-dark">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

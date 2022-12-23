@@ -6,22 +6,26 @@
   "main": "dist/dist.js",
   "types": "src/dist.ts",
   "dependencies": {
-    "@nlp-manager/shared": "*",
     "@blueprintjs/core": "^4.9.4",
     "@blueprintjs/datetime": "^4.3.10",
     "@blueprintjs/icons": "^4.4.2",
     "@blueprintjs/select": "^4.6.6",
     "@blueprintjs/table": "^4.6.5",
     "@heroicons/react": "^1.0.6",
+    "@nlp-manager/shared": "*",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "config": "^3.3.7",
+    "crypto-browserify": "^3.12.0",
+    "path-browserify": "^1.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-json-view": "^1.21.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
-    "socket.io-client": "^4.5.1"
+    "socket.io-client": "^4.5.1",
+    "stream-browserify": "^3.0.0"
   },
   "scripts": {
     "start": "SUPPRESS_NO_CONFIG_WARNING=true craco start",
@@ -62,6 +66,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "crypto": "npm:crypto-browserify",
+    "path": "npm:path-browserify",
+    "stream": "npm:stream-browserify"
   },
   "devDependencies": {
     "@craco/craco": "^6.4.5",

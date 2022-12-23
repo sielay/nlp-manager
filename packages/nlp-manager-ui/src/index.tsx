@@ -1,3 +1,7 @@
 import { init } from "./dist";
+import { loadBackend } from "./utils/backendLoader";
 
-init("root");
+void (async () => {
+  await loadBackend();
+  init("root");
+})();

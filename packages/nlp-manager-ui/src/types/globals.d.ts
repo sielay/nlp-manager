@@ -1,4 +1,4 @@
-import { ElectronAPI } from '@nlp-manager/shared';
+import { NlpManagerBackend } from '@nlp-manager/shared';
 export {};
 declare global {
   declare namespace CONFIG {
@@ -7,6 +7,6 @@ declare global {
   }
 
   interface Window {
-    electronAPI?: ElectronAPI
+    nlpManagerBackend?: NlpManagerBackend
   }
 }

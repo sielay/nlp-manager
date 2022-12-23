@@ -1,4 +1,5 @@
 const interpolateHtml = require("craco-interpolate-html-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const config = require("config");
 const webpack = require("webpack");
 
@@ -20,8 +21,30 @@ module.exports = {
       webpackConfig.plugins.push(
         new webpack.DefinePlugin({ CONFIG: JSON.stringify(require("config")) })
       );
+      webpackConfig.plugins.push(
+        new CopyPlugin({
+          patterns: [
+            {
+              from: "../../node_modules/sql.js/dist/sql-wasm.wasm",
+            },
+          ],
+        })
+      );
       webpackConfig.stats = "verbose";
       // Always return the config object.
+      webpackConfig.resolve.fallback = webpackConfig.resolve.fallback || {};
+      webpackConfig.resolve.fallback.fs = false;
+      webpackConfig.resolve.fallback.mssql = false;
+      webpackConfig.resolve.fallback.path = require.resolve("path-browserify");
+      webpackConfig.resolve.fallback.stream =
+        require.resolve("stream-browserify");
+
+      webpackConfig.experiments = {
+        asyncWebAssembly: true,
+        syncWebAssembly: true,
+        // futureDefaults: true
+      };
+
       return webpackConfig;
     },
   },

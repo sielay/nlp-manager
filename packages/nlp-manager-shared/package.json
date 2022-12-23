@@ -7,9 +7,20 @@
   "scripts": {
     "dist": "rm -rf ./dist && rm *.tsbuildinfo || true && mkdir dist && tsc --build",
     "dev": "tsc --build --watch",
-    "dev:electron": "tsc --build --watch"
+    "copy-files": "copyfiles src/**/*.json dist/",
+    "dev:electron": "tsc --build --watch",
+    "test": "yarn jest --coverage --watchAll --detectOpenHandles"
   },
   "devDependencies": {
+    "@types/jest": "^29.2.4",
+    "ts-jest": "^29.0.3",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@types/ajv": "^1.0.0",
+    "ajv": "^8.11.2",
+    "copyfiles": "^2.4.1",
+    "sql.js": "^1.8.0",
+    "trilogy": "^2.0.5"
   }
 }

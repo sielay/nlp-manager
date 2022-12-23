@@ -1,2 +1,3 @@
 export const VERSION = "0.1.0";
-export * from "./electronAPI";
+export * from "./nlpManagerBackend";
+export * from "./models";

@@ -32,9 +32,8 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
-    "dev:old": "concurrently -k \"yarn workspace @nlp-manager/ui run electron\" \"yarn run wait:electron\"",
-    "wait:electron": "wait-on tcp:8082 && yarn workspace @nlp-manager/electron run start",
-    "dev:electron": "lerna exec --parallel 'yarn run dev:electron'"
+    "dev:electron": "lerna exec --parallel 'yarn run dev:electron'",
+    "dev:ui": "yarn workspace @nlp-manager/ui run start"
   },
   "dependencies": {
     
