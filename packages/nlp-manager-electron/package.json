@@ -10,7 +10,8 @@
     "package": "yarn run cleanup && electron-forge package",
     "make": "yarn run cleanup && electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "dev:electron": "yarn run start"
   },
   "keywords": [],
   "author": {

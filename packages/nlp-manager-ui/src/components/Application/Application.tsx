@@ -1,8 +1,11 @@
-import { FC } from "react";
-import { VERSION } from "@nlp-manager/shared";
+import { FC, useEffect, useState } from "react";
 
 export const App: FC<unknown> = () => {
-  return <div>Hello world {VERSION}</div>;
+  const [state, setState] = useState<string>();
+  useEffect(() => {
+    void window.electronAPI?.getVersion().then(setState);
+  }, []);
+  return <div>Hello world {state}</div>;
 };
 
 export const Application: FC<unknown> = () => {
