@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  coverage:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,6 +16,11 @@ jobs:
         name: Type Check
         with:
           cmd: typeCheck
+      - run: ls -la ./packages/nlp-manager-ui/node_modules
+      - run: ls -la ./packages/nlp-manager-ui/node_modules/.bin
+  coverage-shared:
+    needs: build
+    steps:
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test Shared
         with:
@@ -23,15 +28,13 @@ jobs:
           test-script: yarn test
           working-directory: ./packages/nlp-manager-shared
           output: report-markdown
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        name: Test Electron
+      - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          skip-step: install
-          test-script: yarn test
-          working-directory: ./packages/nlp-manager-electron
-          output: report-markdown
-      - run: ls -la ./packages/nlp-manager-ui/node_modules
-      - run: ls -la ./packages/nlp-manager-ui/node_modules/.bin
+          working-directory: ./packages/nlp-manager-shared
+          message: SHARED ${{ steps.coverage.outputs.report }}
+  coverage-ui:
+    needs: build
+    steps:
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test UI
         with:
@@ -41,12 +44,18 @@ jobs:
           output: report-markdown
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          working-directory: ./packages/nlp-manager-shared
-          message: SHARED ${{ steps.coverage.outputs.report }}
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
           working-directory: ./packages/nlp-manager-ui
           message: UI ${{ steps.coverage.outputs.report }}
+  coverage-electron:
+    needs: build
+    steps:
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        name: Test Electron
+        with:
+          skip-step: install
+          test-script: yarn test
+          working-directory: ./packages/nlp-manager-electron
+          output: report-markdown
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           working-directory: ./packages/nlp-manager-electron

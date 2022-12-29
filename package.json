@@ -18,7 +18,8 @@
       "**/shebang-command",
       "**/shebang-regex",
       "**/craco",
-      "**/ts-jest"
+      "**/ts-jest",
+      "**/jest"
     ]
   },
   "packageManager": "yarn@3.2.3",
