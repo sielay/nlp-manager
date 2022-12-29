@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  coverage:
+  type-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,38 +16,42 @@ jobs:
         name: Type Check
         with:
           cmd: typeCheck
-      - run: ls -la ./packages/nlp-manager-ui/node_modules
-      - run: ls -la ./packages/nlp-manager-ui/node_modules/.bin
+  test-shared:
+    runs-on: ubuntu-latest
+    needs: type-check
+    steps:
+      - uses: actions/checkout@v3
+      - run: npx yarn
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test Shared
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-shared
-          output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          working-directory: ./packages/nlp-manager-shared
-          message: SHARED ${{ steps.coverage.outputs.report }}
+          output: comment, report-markdown
+  test-ui:
+    runs-on: ubuntu-latest
+    needs: type-check
+    steps:
+      - uses: actions/checkout@v3
+      - run: npx yarn
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test UI
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-ui
-          output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          working-directory: ./packages/nlp-manager-ui
-          message: UI ${{ steps.coverage.outputs.report }}
+          output: comment, report-markdown
+  test-electron:
+    runs-on: ubuntu-latest
+    needs: type-check
+    steps:
+      - uses: actions/checkout@v3
+      - run: npx yarn
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test Electron
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-electron
-          output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          working-directory: ./packages/nlp-manager-electron
-          message: Electron ${{ steps.coverage.outputs.report }}
+          output: comment, report-markdown
