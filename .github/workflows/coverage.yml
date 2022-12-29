@@ -9,37 +9,42 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: borales/actions-yarn@v4
+        name: Install
         with:
           cmd: install
       - uses: borales/actions-yarn@v4
+        name: Type Check
         with:
           cmd: typeCheck
       - uses: ArtiomTr/jest-coverage-report-action@v2
+        name: Test Shared
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-shared
           output: report-markdown        
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          working-directory: ./packages/nlp-manager-shared
-          message: SHARED ${{ steps.coverage.outputs.report }}
       - uses: ArtiomTr/jest-coverage-report-action@v2
+        name: Test UI
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-ui
           output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          working-directory: ./packages/nlp-manager-ui
-          message: UI ${{ steps.coverage.outputs.report }}
       - uses: ArtiomTr/jest-coverage-report-action@v2
+        name: Test Electron
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-electron
           output: report-markdown
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          working-directory: ./packages/nlp-manager-shared
+          message: SHARED ${{ steps.coverage.outputs.report }}
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          working-directory: ./packages/nlp-manager-ui
+          message: UI ${{ steps.coverage.outputs.report }}
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           working-directory: ./packages/nlp-manager-electron
