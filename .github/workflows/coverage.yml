@@ -22,13 +22,6 @@ jobs:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-shared
-          output: report-markdown        
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        name: Test UI
-        with:
-          skip-step: install
-          test-script: yarn test
-          working-directory: ./packages/nlp-manager-ui
           output: report-markdown
       - uses: ArtiomTr/jest-coverage-report-action@v2
         name: Test Electron
@@ -36,6 +29,15 @@ jobs:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-electron
+          output: report-markdown
+      - run: ls -la ./packages/nlp-manager-ui/node_modules
+      - run: ls -la ./packages/nlp-manager-ui/node_modules/.bin
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        name: Test UI
+        with:
+          skip-step: install
+          test-script: yarn test
+          working-directory: ./packages/nlp-manager-ui
           output: report-markdown
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
