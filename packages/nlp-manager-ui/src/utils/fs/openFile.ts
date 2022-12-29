@@ -1,12 +1,7 @@
+import { FileLike, guessDataType, ModelType } from "@nlp-manager/shared";
+
 interface OpenFileOptions {
   accept?: string;
-}
-
-export type FileLikeData = string | ArrayBuffer | null | undefined;
-export interface FileLike {
-  name: string;
-  type: string;
-  content: FileLikeData;
 }
 
 export const openFile = ({ accept }: OpenFileOptions): Promise<FileLike[]> => {
@@ -39,12 +34,15 @@ export const readFile = (file: File): Promise<FileLike> => {
     reader.addEventListener("load", (event) => {
       try {
         const result = event?.target?.result;
-        const content = JsonParseTypes.includes(file.type)
-          ? JSON.parse(result as string)
-          : result;
+        const mayBeJson = JsonParseTypes.includes(file.type);
+        const content = mayBeJson ? JSON.parse(result as string) : result;
+        // eslint-disable-next-line no-debugger
+        debugger;
+        const type = guessDataType(content, file.type);
         resolve({
           name: file.name,
-          type: file.type,
+          mimeType: file.type,
+          type,
           content,
         });
       } catch (error) {

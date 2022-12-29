@@ -25,3 +25,10 @@ export const getDB = async (): Promise<Trilogy> => {
   }
   return dbInstance;
 };
+
+export const reset = async () => {
+  if (dbInstance) {
+    await dbInstance.close();
+  }
+  dbInstance = undefined;
+}

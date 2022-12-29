@@ -1,4 +1,5 @@
 import { TreeNodeInfo } from "@blueprintjs/core";
+import { Audit, CorpusFile } from "@nlp-manager/shared";
 import {
   AnyAction,
   CaseReducerActions,
@@ -39,7 +40,7 @@ const INITIAL_STATE: State = [
   },
 ];
 
-const findNode = (tree: State, clicked: Item): Item | undefined => {
+const findNode = (tree: State, clicked: Partial<Item>): Item | undefined => {
   for (const node of tree) {
     if (node.id === clicked.id) return node;
     if (node.childNodes) {
@@ -49,13 +50,20 @@ const findNode = (tree: State, clicked: Item): Item | undefined => {
   }
 };
 
-const findNodeWithChildren = (tree: State, clicked: Item): Item | undefined => {
+const findNodeWithChildren = (
+  tree: State,
+  clicked: Partial<Item>
+): Item | undefined => {
   const node = findNode(tree, clicked);
   if (!node?.childNodes) return undefined;
   return node;
 };
 
-const toggleNode = (tree: State, clicked: Item, force?: boolean): boolean => {
+const toggleNode = (
+  tree: State,
+  clicked: Partial<Item>,
+  force?: boolean
+): boolean => {
   const node = findNodeWithChildren(tree, clicked);
   if (!node) return false;
   if (force === true) return (node.isExpanded = true);
@@ -72,6 +80,20 @@ export const reducers = {
   },
   onClick: (state: State, { payload }: PayloadAction<Item>) => {
     toggleNode(state, payload);
+  },
+  onCorpora: (
+    state: State,
+    { payload }: PayloadAction<(CorpusFile & Audit)[]>
+  ) => {
+    const container = findNode(state, { id: "nlp.cores.user" });
+    if (container) {
+      container.childNodes = payload.map(({ id, name }) => {
+        return {
+          id: `nlp.cores.user.${id}`,
+          label: name,
+        };
+      });
+    }
   },
 };
 

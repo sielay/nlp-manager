@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Frame } from "../Frame";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./Application.scss";
 
 export const App: FC<unknown> = () => {
@@ -12,5 +13,10 @@ export const App: FC<unknown> = () => {
 };
 
 export const Application: FC<unknown> = () => {
-  return <App />;
+  const client = new QueryClient();
+  return (
+    <QueryClientProvider client={client}>
+      <App />
+    </QueryClientProvider>
+  );
 };

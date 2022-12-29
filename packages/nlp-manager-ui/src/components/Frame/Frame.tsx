@@ -1,9 +1,11 @@
 import { Alignment, Button, ButtonGroup, Navbar } from "@blueprintjs/core";
 import { FC } from "react";
+import { useCorpora } from "../../hooks";
 import { Sidebar } from "../Sidebar";
 import "./Frame.scss";
 
 export const Frame: FC<unknown> = () => {
+  const { refetch } = useCorpora();
   return (
     <div className="Frame">
       <Navbar>
@@ -13,8 +15,10 @@ export const Frame: FC<unknown> = () => {
         <Navbar.Group align={Alignment.LEFT}>
           <ButtonGroup minimal>
             <Button
-              onClick={() => {
-                window.nlpManagerBackend?.importFile();
+              onClick={async () => {
+                if(await window.nlpManagerBackend?.importFile()) {
+                  await refetch();
+                }
               }}
             >
               Import file

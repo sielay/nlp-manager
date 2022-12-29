@@ -1,6 +1,4 @@
+export * from "./abstractBackend";
 export * from "./db";
+export * from "./types";
 
-export interface NlpManagerBackend {
-  getVersion: () => Promise<string>;
-  importFile: () => Promise<void>;
-}
