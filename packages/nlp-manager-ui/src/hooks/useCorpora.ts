@@ -1,4 +1,4 @@
-import { Audit, CorpusFile } from "@nlp-manager/shared";
+import { Audit, Corpus } from "@nlp-manager/shared";
 import { useQuery } from "react-query";
 
 export const useCorpora = () => {
@@ -10,7 +10,7 @@ export const useCorpora = () => {
     refetchOnWindowFocus: false,
   };
 
-  return useQuery<(CorpusFile & Audit)[]>(
+  return useQuery<(Corpus & Audit)[]>(
     ["corpus"],
     async () => {
       // react-query has some dumb update to typings

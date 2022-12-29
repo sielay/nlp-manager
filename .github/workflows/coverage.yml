@@ -11,12 +11,15 @@ jobs:
       - uses: borales/actions-yarn@v4
         with:
           cmd: install
+      - uses: borales/actions-yarn@v4
+        with:
+          cmd: typeCheck
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           skip-step: install
           test-script: yarn test
           working-directory: ./packages/nlp-manager-shared
-          output: report-markdown
+          output: report-markdown        
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           working-directory: ./packages/nlp-manager-shared

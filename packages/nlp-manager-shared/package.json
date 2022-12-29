@@ -10,7 +10,8 @@
     "copy-files": "copyfiles src/**/*.json dist/",
     "dev:electron": "tsc --build --watch",
     "test:dev": "yarn jest --coverage --watchAll --detectOpenHandles",
-    "test": "yarn jest --coverage --detectOpenHandles"
+    "test": "yarn jest --coverage --detectOpenHandles",
+    "typeCheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",

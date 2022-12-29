@@ -1,4 +1,3 @@
-export * from "./abstractBackend";
-export * from "./db";
-export * from "./types";
-
+export * from './abstractBackend'
+export * from './db'
+export * from './types'

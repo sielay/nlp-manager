@@ -13,7 +13,8 @@
     "lint": "eslint --ext .ts,.tsx .",
     "dev:electron": "yarn run start",
     "test:dev": "yarn jest --coverage --watchAll --detectOpenHandles",
-    "test": "yarn jest --coverage --detectOpenHandles"
+    "test": "yarn jest --coverage --detectOpenHandles --passWithNoTests",
+    "typeCheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": {
@@ -30,14 +31,10 @@
     "@electron-forge/plugin-webpack": "^6.0.4",
     "@types/jest": "^29.2.4",
     "@types/rimraf": "^3.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.0.0",
     "electron": "22.0.0",
-    "eslint": "^8.0.1",
-    "eslint-plugin-import": "^2.25.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "node-loader": "^2.0.0",
     "recursive-copy": "^2.0.14",

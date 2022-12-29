@@ -9,18 +9,18 @@ export interface RecordType extends ReturnDict {
   fileName: string;
   createdAt: Date;
   data: object;
-  id?: number;
+  id: number;
 }
 
 let model: Model<RecordType>;
 
-const cast = (record: RecordType): Corpus & Audit => {
+const cast = (record: RecordType & Audit): Corpus & Audit => {
   const { name, locale, createdAt, id, data } = record;
   const result = {
     name,
     locale,
     data: data as CorpusEntry[],
-    id,
+    id: id,
     createdAt
   } satisfies Corpus & Audit;
   return result;
@@ -52,7 +52,8 @@ export const insertCorpus = async (corpus: CorpusFile) => {
     locale,
     createdAt: new Date(),
     fileName,
-    data
+    data,
+    id: 0
   });
 };
 

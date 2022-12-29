@@ -1,10 +1,10 @@
 import { TreeNodeInfo } from "@blueprintjs/core";
-import { Audit, CorpusFile } from "@nlp-manager/shared";
+import { Audit, Corpus } from "@nlp-manager/shared";
 import {
   AnyAction,
   CaseReducerActions,
   createSlice,
-  PayloadAction,
+  PayloadAction
 } from "@reduxjs/toolkit";
 import { Dispatch, useReducer } from "react";
 
@@ -83,7 +83,7 @@ export const reducers = {
   },
   onCorpora: (
     state: State,
-    { payload }: PayloadAction<(CorpusFile & Audit)[]>
+    { payload }: PayloadAction<(Corpus & Audit)[]>
   ) => {
     const container = findNode(state, { id: "nlp.cores.user" });
     if (container) {

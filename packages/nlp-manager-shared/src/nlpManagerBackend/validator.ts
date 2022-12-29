@@ -1,3 +1,3 @@
-import Ajv from "ajv";
+import Ajv from 'ajv'
 
-export const validator = new Ajv();
+export const validator = new Ajv()
