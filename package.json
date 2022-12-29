@@ -33,6 +33,7 @@
     "yarn": "^1.4.2"
   },
   "scripts": {
+    "postinstall": "[ \"$HUSKY\" != 0 ] && husky install || true",
     "dev:electron": "lerna exec --parallel 'yarn run dev:electron'",
     "dev:ui": "yarn workspace @nlp-manager/ui run start"
   },
