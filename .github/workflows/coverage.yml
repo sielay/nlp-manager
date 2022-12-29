@@ -21,4 +21,26 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           working-directory: ./packages/nlp-manager-shared
-          message: ${{ steps.coverage.outputs.report }}
+          message: SHARED ${{ steps.coverage.outputs.report }}
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+          skip-step: install
+          test-script: yarn test
+          working-directory: ./packages/nlp-manager-ui
+          output: report-markdown
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          working-directory: ./packages/nlp-manager-ui
+          message: UI ${{ steps.coverage.outputs.report }}
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+          skip-step: install
+          test-script: yarn test
+          working-directory: ./packages/nlp-manager-electron
+          output: report-markdown
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          working-directory: ./packages/nlp-manager-electron
+          message: Electron ${{ steps.coverage.outputs.report }}
