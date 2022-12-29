@@ -5,5 +5,9 @@ module.exports = {
   testMatch: ["**/__tests__/**/*.ts?(x)"],
   testPathIgnorePatterns: ["/node_modules/", ".d.ts", ".d.tsx"],
   collectCoverage: true,
-  coveragePathIgnorePatterns: ["/node_modules/", ".js", ".jsx"],
+  collectCoverageFrom: [
+    './src/**/*.ts',
+    './src/**/*.tsx'
+  ],
+  coveragePathIgnorePatterns: ["/node_modules/", ".js", ".jsx", "./src/types", 'index.ts'],
 };
