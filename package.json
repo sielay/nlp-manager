@@ -61,5 +61,12 @@
       "path": "./node_modules/mol-conventional-changelog"
     }
   },
+  "lint-staged": {
+    "*.(t|j)(s|sx)": [
+      "prettier --parser=typescript --write",
+      "eslint --fix"
+    ],
+    "*.{md,css,scss,yaml,yml,json,html}": "prettier --write"
+  },
   "dependencies": {}
 }
