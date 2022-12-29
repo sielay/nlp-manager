@@ -9,7 +9,8 @@
     "dev": "tsc --build --watch",
     "copy-files": "copyfiles src/**/*.json dist/",
     "dev:electron": "tsc --build --watch",
-    "test": "yarn jest --coverage --watchAll --detectOpenHandles"
+    "test:dev": "yarn jest --coverage --watchAll --detectOpenHandles",
+    "test": "yarn jest --coverage --detectOpenHandles"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",

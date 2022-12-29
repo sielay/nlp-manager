@@ -8,14 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run install
-        uses: borales/actions-yarn@v4
+      - uses: borales/actions-yarn@v4
         with:
-          cmd: install # will run `yarn install` command
-      - name: Run tests
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: workspace @nlp-manager/shared test --coverage --detectOpenHandles --ci --json --coverage --testLocationInResults --outputFile=report.json
+          cmd: install
       - uses: ArtiomTr/jest-coverage-report-action@v2
         id: coverage
         with:
