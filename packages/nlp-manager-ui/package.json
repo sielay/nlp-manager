@@ -35,7 +35,7 @@
     "build": "craco build",
     "build:electron": "PUBLIC_URL=./ craco build",
     "test:dev": "craco test --coverage --watchAll --detectOpenHandles",
-    "test": "./node_modules/.bin/craco test --coverage --detectOpenHandles --passWithNoTests",
+    "test": "craco test --coverage --detectOpenHandles --passWithNoTests",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",

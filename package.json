@@ -16,7 +16,9 @@
       "**/electron*",
       "**/cross-spawn",
       "**/shebang-command",
-      "**/shebang-regex"
+      "**/shebang-regex",
+      "**/craco",
+      "**/ts-jest"
     ]
   },
   "packageManager": "yarn@3.2.3",
