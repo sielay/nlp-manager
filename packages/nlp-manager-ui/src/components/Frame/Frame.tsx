@@ -1,11 +1,12 @@
 import { Alignment, Button, ButtonGroup, Navbar } from "@blueprintjs/core";
 import { FC } from "react";
+import CorpusEditor from "../../editors/CorpusEditor";
 import { useCorpora } from "../../hooks";
 import { Sidebar } from "../Sidebar";
 import "./Frame.scss";
 
 export const Frame: FC<unknown> = () => {
-  const { refetch } = useCorpora();
+  const { refetch, data } = useCorpora();
   return (
     <div className="Frame">
       <Navbar>
@@ -16,7 +17,7 @@ export const Frame: FC<unknown> = () => {
           <ButtonGroup minimal>
             <Button
               onClick={async () => {
-                if(await window.nlpManagerBackend?.importFile()) {
+                if (await window.nlpManagerBackend?.importFile()) {
                   await refetch();
                 }
               }}
@@ -41,7 +42,9 @@ export const Frame: FC<unknown> = () => {
         <div className="Frame__sidebar">
           <Sidebar />
         </div>
-        <div className="Frame__content"></div>
+        <div className="Frame__content">
+          {data && data.length > 0 && <CorpusEditor id={data[0].id} />}
+        </div>
       </div>
     </div>
   );

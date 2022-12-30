@@ -4,7 +4,7 @@ import {
   AnyAction,
   CaseReducerActions,
   createSlice,
-  PayloadAction
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { Dispatch, useReducer } from "react";
 
@@ -81,16 +81,13 @@ export const reducers = {
   onClick: (state: State, { payload }: PayloadAction<Item>) => {
     toggleNode(state, payload);
   },
-  onCorpora: (
-    state: State,
-    { payload }: PayloadAction<(Corpus & Audit)[]>
-  ) => {
+  onCorpora: (state: State, { payload }: PayloadAction<(Corpus & Audit)[]>) => {
     const container = findNode(state, { id: "nlp.cores.user" });
     if (container) {
       container.childNodes = payload.map(({ id, name }) => {
         return {
           id: `nlp.cores.user.${id}`,
-          label: name,
+          label: `${id} - ${name}`,
         };
       });
     }

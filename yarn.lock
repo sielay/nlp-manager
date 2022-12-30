@@ -2994,6 +2994,85 @@
   dependencies:
     eslint-scope "5.1.1"
 
+"@nlpjs/core@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/core/-/core-4.25.0.tgz#d198358ed2e7400c03ab956ed233e675c709ff63"
+  integrity sha512-lqsaXz4QfEVVoj2XFZV5xzyVcpQIgv8n4RCv6oqL9FL06mxhMgB4Xqv0W+kaUxClDlNiVxGD02jYGQfvlcks5g==
+
+"@nlpjs/lang-en-min@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/lang-en-min/-/lang-en-min-4.25.0.tgz#52a867a0fd98dcc3ba3929a3b39c10032ec9c1ff"
+  integrity sha512-Geu5szy1WTFnP2YuiBf89kUE8eZGVc/o23MwdQZHkTDL6ZuZHlTgyKp1IVALiVvsexaLCj2SS1oBvs7bjaYmOA==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+
+"@nlpjs/language-min@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/language-min/-/language-min-4.25.0.tgz#be462fc8320600a3d6c6c5a9f71cf70eb39d02b2"
+  integrity sha512-g8jtbDbqtRm+dlD/1Vnb4VWfKbKteApEGVTqIMxYkk6N/HMhvLZ5J2svrxzrB98a/HZ0fb//YBfFgymnz9Oukg==
+
+"@nlpjs/ner@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/ner/-/ner-4.25.0.tgz#9c61c70efd0220faa7852a6f99ae6491bc93bd17"
+  integrity sha512-0ek823i/qsEKUPwBqBI7A8N3O9qWsudipSW1NPObZSBGE7Znvx+69WrOY3k0PRsGyXRPgstTzhqe7FNZvsMiTA==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+    "@nlpjs/language-min" "^4.25.0"
+    "@nlpjs/similarity" "^4.22.7"
+
+"@nlpjs/neural@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/neural/-/neural-4.25.0.tgz#8a3504d4b65fa7ac670573a056107a4541005830"
+  integrity sha512-Oz20denGiBe0DlQsS7lN4TNrATN1nXlHKc/HB6jJPegjVmgJVCugDaHwIGoV7qOWyA6F2fRRwOgD+quNT2gVpg==
+
+"@nlpjs/nlg@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/nlg/-/nlg-4.25.0.tgz#68b09c42f69a52a8308b80b8ee192cf2df980da4"
+  integrity sha512-/jz/xM26c2Tzz7reyvXZKGYMtA7/DNhVeEgIw7D1it9NhN3rxmXxAXtEnh2Kzajq01/IIrGxI61oGJ++P90loQ==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+
+"@nlpjs/nlp@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/nlp/-/nlp-4.25.0.tgz#ff2c515b17ab892af099a44d37a112dfaee10702"
+  integrity sha512-ldEGftHj39n1vh6BbRNYtj9G7KT9vlE9IXQE+RR4UnhUowYqDSyM7iSl9sQAToSmxsXLNoMLL0Meg/ffhSVQig==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+    "@nlpjs/ner" "^4.25.0"
+    "@nlpjs/nlg" "^4.25.0"
+    "@nlpjs/nlu" "^4.25.0"
+    "@nlpjs/sentiment" "^4.25.0"
+    "@nlpjs/slot" "^4.25.0"
+
+"@nlpjs/nlu@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/nlu/-/nlu-4.25.0.tgz#a0fd9fb0e9c76df667395a89dfab259de705d1a0"
+  integrity sha512-uzb5df9qgvySFXCkVDQR0yfRsS3K1VqYDHo6Ym+EiIP3X47hEo75zWpbZ+CGqsT7W2LLrZPdv05KtnA/wAVdzQ==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+    "@nlpjs/language-min" "^4.25.0"
+    "@nlpjs/neural" "^4.25.0"
+    "@nlpjs/similarity" "^4.22.7"
+
+"@nlpjs/sentiment@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/sentiment/-/sentiment-4.25.0.tgz#d554021b2224c2c6f7ef3593cbfbc7b81ed2afec"
+  integrity sha512-Gl1cmh8meSVXHpIvPzP5RZpB8ECC1cPHdH9gJgvidcNw1xy+TYNbXtu1jG7Bb6BjHrFLkhQuZEg4+4ItuLiWnw==
+  dependencies:
+    "@nlpjs/core" "^4.25.0"
+    "@nlpjs/language-min" "^4.25.0"
+    "@nlpjs/neural" "^4.25.0"
+
+"@nlpjs/similarity@^4.22.7":
+  version "4.22.7"
+  resolved "https://registry.yarnpkg.com/@nlpjs/similarity/-/similarity-4.22.7.tgz#ba178ae1a33df7b4bb6b403dbf44a112ba7119fb"
+  integrity sha512-iWbZz6Yf0sXIiFi2jtdpsCLkOQsXFxT1YME4GysMtJxKiN/Cu4AhXugEiixhacPIPQb8lfouR0dQtSnx+9kW2A==
+
+"@nlpjs/slot@^4.25.0":
+  version "4.25.0"
+  resolved "https://registry.yarnpkg.com/@nlpjs/slot/-/slot-4.25.0.tgz#5a1cde33e280a5aa39804f3337041f2f255b8ed2"
+  integrity sha512-qua5kH8y9lun40wNKNPogwlVuK7QIW9lLoiptbrmdGQ6Q5lsmR1w4Zx7w0n9YfXDq5mtrsJYK3HqIf+qmY+LpQ==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -8085,7 +8164,7 @@ cross-zip@^4.0.0:
   resolved "https://registry.yarnpkg.com/cross-zip/-/cross-zip-4.0.0.tgz#c29bfb2c001659a6d480ae9596f3bee83b48a230"
   integrity sha512-MEzGfZo0rqE10O/B+AEcCSJLZsrWuRUvmqJTqHNqBtALhaJc3E3ixLGLJNTRzEA2K34wbmOHC4fwYs9sVsdcCA==
 
-crypto-browserify@^3.11.0, crypto-browserify@^3.12.0:
+crypto-browserify@^3.11.0, crypto-browserify@^3.12.0, "crypto@npm:crypto-browserify":
   name crypto
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-3.12.0.tgz#396cf9f3137f03e4b8e532c58f698254e00f80ec"
@@ -15308,7 +15387,7 @@ path-browserify@0.0.1:
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.1.tgz#e6c4ddd7ed3aa27c68a20cc4e50e1a4ee83bbc4a"
   integrity sha512-BapA40NHICOS+USX9SN4tyhq+A2RrN/Ws5F0Z5aMHDp98Fl86lX8Oti8B7uN93L4Ifv4fHOEA+pQw87gmMO/lQ==
 
-path-browserify@^1.0.1:
+path-browserify@^1.0.1, "path@npm:path-browserify":
   name path
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-1.0.1.tgz#d98454a9c3753d5790860f16f68867b9e46be1fd"
@@ -18335,7 +18414,7 @@ stream-browserify@^2.0.1:
     inherits "~2.0.1"
     readable-stream "^2.0.2"
 
-stream-browserify@^3.0.0:
+stream-browserify@^3.0.0, "stream@npm:stream-browserify":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/stream-browserify/-/stream-browserify-3.0.0.tgz#22b0a2850cdf6503e73085da1fc7b7d0c2122f2f"
   integrity sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA==

@@ -55,7 +55,7 @@
   "scripts": {
     "postinstall": "[ \"$HUSKY\" != 0 ] && husky install || true",
     "dev:electron": "lerna exec --parallel 'yarn run dev:electron'",
-    "dev:ui": "yarn workspace @nlp-manager/ui run start",
+    "dev:ui": "yarn workspace @nlp-manager/shared run dev & yarn workspace @nlp-manager/ui run start",
     "typeCheck": "yarn workspaces run typeCheck",
     "test": "lerna run test",
     "lint": "yarn typeCheck && eslint packages/*/src/**/*.{js,ts,tsx} --fix"

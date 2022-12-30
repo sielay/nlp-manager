@@ -2,13 +2,21 @@
 
 Web/Desktop tool for managing and testing bots based on nlp.js
 
+### NLP debugging
+
+![NLP Debugger](./doc/debugnlp.png)
+
+### NLP Corpus Exploration/Edit
+
+![NLP Intents](./doc/nlpintents.png)
+
 ## Goals
 
- - [ ] Edit corpus files
- - [ ] Edit pipeline files
- - [ ] Edit dialog files
- - [ ] Test bot
- - [ ] Train bot
+- [ ] Edit corpus files
+- [ ] Edit pipeline files
+- [ ] Edit dialog files
+- [x] Test bot
+- [ ] Train bot
 
 ## Development
 
@@ -36,42 +44,42 @@ TODO
 
 ### @nlp-manager/shared
 
- * Contains shared types
- * Contains shared enums
- * Contains shared routines
- * Exposes interface for window.nlpManagerBackend
+- Contains shared types
+- Contains shared enums
+- Contains shared routines
+- Exposes interface for window.nlpManagerBackend
 
 ### @nlp-manager/ui
 
- * CRACO app
- * Contains interface which has no knowledge of backend 
+- CRACO app
+- Contains interface which has no knowledge of backend
 
 ### @nlp-manager/electron
 
- * ElectronForge app
- * Exposes window.nlpManagerBackend as IPC contextBridge
+- ElectronForge app
+- Exposes window.nlpManagerBackend as IPC contextBridge
 
 ### @nlp-manager/api
 
- * TODO
- * Contains implementation of window.nlpManagerBackend as REST API
+- TODO
+- Contains implementation of window.nlpManagerBackend as REST API
 
 ## @nlp-manager/web-backend
 
- * TODO
- * Simple using memory storage - meant to be used when app runs as static SPA
+- TODO
+- Simple using memory storage - meant to be used when app runs as static SPA
 
 ## @nlp-manager/backend
 
- * TODO
- * Unlicensed - this part of the repository is meant to remain proprietary solution. Contact the author for details.
+- TODO
+- Unlicensed
 
 ## License
 
 DUAL LICENSE:
 
- * MIT license below for the content of this repository.
- * Separate license for @nlp-manager/backend package.
+- MIT license below for the content of this repository.
+- Separate license for @nlp-manager/backend package.
 
 MIT License
 

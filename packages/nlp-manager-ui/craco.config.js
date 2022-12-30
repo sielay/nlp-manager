@@ -38,6 +38,11 @@ module.exports = {
       webpackConfig.resolve.fallback.path = require.resolve("path-browserify");
       webpackConfig.resolve.fallback.stream =
         require.resolve("stream-browserify");
+      webpackConfig.resolve.fallback.https =
+        require.resolve("https-browserify");
+      webpackConfig.resolve.fallback.tls = false;
+      webpackConfig.resolve.fallback.net = false;
+      webpackConfig.resolve.fallback.readline = false;
 
       webpackConfig.experiments = {
         asyncWebAssembly: true,
