@@ -1,0 +1,16 @@
+.Frame {
+  @apply flex flex-col w-full h-full;
+
+  &__columns {
+    @apply flex flex-row flex-grow;
+  }
+  &__sidebar {
+    @apply flex-grow-0 flex-shrink-0 w-60 border-r border-gray-400;
+  }
+  &__content {
+    @apply flex-grow pt-14 relative;
+    .bp4-navbar {
+      @apply absolute top-0 left-0;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "required": ["data", "name", "locale"],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "locale": {
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "intent": {
+            "type": "string"
+          },
+          "utterances": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "required": [],
+                  "properties": {
+                    "answer": {
+                      "type": "string"
+                    },
+                    "opts": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
