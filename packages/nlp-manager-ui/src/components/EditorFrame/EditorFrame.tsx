@@ -1,19 +1,24 @@
 import React, {
-  memo,
   FC,
+  forwardRef,
+  memo,
+  RefAttributes,
   useCallback,
   useEffect,
   useRef,
   useState,
-  forwardRef,
-  RefAttributes,
 } from "react";
+import {
+  EditorEvent,
+  EditorEventType,
+  EditorEventTypes,
+} from "../../hooks/editor";
+import { useEditors } from "../../hooks/editors";
+import { selectEditor } from "../../hooks/editors/selectors";
 
-export interface EditorInstanceProps {
-  id: number;
-  editor: string;
-  onMessage?: (id: number, event: unknown) => void;
-  nextEvent?: unknown;
+export interface EditorFrameProps {
+  instance: string;
+  editorApp: string;
 }
 
 const MemoizedIframe: FC<
@@ -38,29 +43,29 @@ const MemoizedIframe: FC<
   ))
 );
 
-export const EditorInstance: FC<EditorInstanceProps> = ({
-  id,
-  editor,
-  onMessage,
-  nextEvent,
-}) => {
-  const [src, setSrc] = useState<string>(`/ui/${editor}`);
+const isEditorEvent = (data: EditorEvent | string): data is EditorEvent => {
+  if (typeof data === "string") return false;
+  return EditorEventTypes.includes(data.type);
+};
+
+export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp }) => {
+  const [src, setSrc] = useState<string>(`/ui/${editorApp}`);
   const ref = useRef<HTMLIFrameElement>(null);
+  const { onMessage, state } = useEditors();
+  const editor = selectEditor(state, instance);
+  const { nextEvent } = editor || {};
 
   const handler = useCallback(
-    (event: MessageEvent<unknown>) => {
-      if (
-        (event as MessageEvent<unknown>).data === "blueprint-table-post-message"
-      )
-        return;
-      onMessage && onMessage(id, event.data);
+    (event: MessageEvent<EditorEvent | string>) => {
+      const { data } = event;
+      isEditorEvent(data) && onMessage && onMessage(instance, data);
     },
-    [onMessage, id]
+    [onMessage, instance]
   );
 
   useEffect(() => {
     ref.current?.contentWindow?.addEventListener("message", handler);
-    setSrc(`/ui/${editor}`);
+    setSrc(`/ui/${editorApp}`);
     return () =>
       ref.current?.contentWindow?.removeEventListener("message", handler);
   }, [handler, editor, setSrc, ref]);
@@ -73,9 +78,9 @@ export const EditorInstance: FC<EditorInstanceProps> = ({
   return (
     <MemoizedIframe
       ref={ref}
-      title={"Loading"}
+      title={"Loading..."}
       src={src}
-      className="border border-red-400 border-2 w-full h-full"
+      className="border w-full h-full"
     ></MemoizedIframe>
   );
 };

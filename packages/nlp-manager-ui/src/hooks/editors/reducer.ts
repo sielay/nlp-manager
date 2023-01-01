@@ -5,31 +5,43 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { Dispatch, useReducer } from "react";
-import { EditorsContextState, EditorState } from "./types";
+import { v4 } from "uuid";
+import { AppEventType, EditorEventType, EditorStatus } from "../editor/consts";
+import { EditorEvent } from "../editor/types";
+import { findEditor, selectEditor } from "./selectors";
+import { EditorsContextState } from "./types";
 
 export const reducers = {
   addEditor: (
     state: EditorsContextState,
-    { payload: { type, data } }: PayloadAction<{ type: string; data: unknown }>
+    {
+      payload: { editor, file },
+    }: PayloadAction<{ editor: string; file?: string }>
   ) => {
     state.editors.push({
-      type,
-      title: `Loading ${type}...`,
-      state: EditorState.LOADING,
-      data,
+      instance: v4(),
+      editor,
+      title: `Loading ${editor}...`,
+      state: EditorStatus.LOADING,
+      file,
     });
   },
   editorLoaded: (
     state: EditorsContextState,
-    { payload }: PayloadAction<number>
+    { payload }: PayloadAction<string>
   ) => {
-    state.editors[payload].state = EditorState.LOADING;
+    // state.editors[payload].state = EditorStatus.LOADING;
   },
   closeEditor: (
     state: EditorsContextState,
-    { payload }: PayloadAction<number>
+    { payload: instance }: PayloadAction<string>
   ) => {
-    state.editors[payload].state = EditorState.CLOSING;
+    const editor = selectEditor(state, instance);
+    if (!editor) return;
+    editor.state = EditorStatus.CLOSING;
+    editor.nextEvent = {
+      type: AppEventType.CLOSE,
+    };
   },
   removeEditor: (
     state: EditorsContextState,
@@ -40,10 +52,12 @@ export const reducers = {
   setTitle: (
     state: EditorsContextState,
     {
-      payload: { title, index },
-    }: PayloadAction<{ index: number; title: string }>
+      payload: { title, instance },
+    }: PayloadAction<{ instance: string; title: string }>
   ) => {
-    state.editors[index].title = title;
+    const editor = selectEditor(state, instance);
+    if (!editor) return;
+    editor.title = title;
   },
   setDirty: (
     state: EditorsContextState,
@@ -52,14 +66,47 @@ export const reducers = {
     }: PayloadAction<{ index: number; dirty: boolean }>
   ) => {
     state.editors[index].state = dirty
-      ? EditorState.MODIFIED
-      : EditorState.OPEN;
+      ? EditorStatus.MODIFIED
+      : EditorStatus.OPEN;
   },
   setActive: (
     state: EditorsContextState,
-    { payload }: PayloadAction<number>
+    { payload }: PayloadAction<string>
   ) => {
     state.activeEditor = payload;
+  },
+  onMessage: (
+    state: EditorsContextState,
+    {
+      payload: {
+        instance,
+        data: { type },
+      },
+    }: PayloadAction<{ instance: string; data: EditorEvent }>
+  ) => {
+    switch (type) {
+      case EditorEventType.INITED: {
+        const editor = selectEditor(state, instance);
+        if (!editor) return;
+        const { file } = editor;
+        if (file) {
+          editor.nextEvent = {
+            type: AppEventType.LOAD,
+            data: file,
+          };
+          return;
+        }
+        editor.nextEvent = {
+          type: AppEventType.NEW,
+        };
+        break;
+      }
+      case EditorEventType.CLOSED: {
+        const editorIndex = findEditor(state, instance);
+        if (editorIndex === -1) return;
+        state.editors.splice(editorIndex, 1);
+      }
+    }
   },
 };
 

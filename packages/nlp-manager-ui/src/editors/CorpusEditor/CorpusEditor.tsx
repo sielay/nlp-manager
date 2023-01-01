@@ -10,6 +10,7 @@ import { Cell, Column, Table2 } from "@blueprintjs/table";
 import { Corpus } from "@nlp-manager/shared";
 import { FC, useState } from "react";
 import { useCorpora } from "../../hooks";
+import { useEditor } from "../../hooks/editor";
 import { useDebugger } from "./useDebugger";
 
 export interface CorpusEditorProps {
@@ -177,6 +178,9 @@ export const Debug: FC<TabProps> = ({ corpus }) => {
 };
 
 export const CorpusEditor: FC<CorpusEditorProps> = ({ id }) => {
+  const { status } = useEditor();
+  return <div>ABC { status }</div>;
+  /*
   const [tab, setTab] = useState<string>("intents");
   // TODO: one to one hook
   const { data } = useCorpora();
@@ -201,5 +205,5 @@ export const CorpusEditor: FC<CorpusEditorProps> = ({ id }) => {
       {tab === "answers" && <Answers corpus={corpus} />}
       {tab === "debug" && <Debug corpus={corpus} />}
     </div>
-  );
+  );*/
 };

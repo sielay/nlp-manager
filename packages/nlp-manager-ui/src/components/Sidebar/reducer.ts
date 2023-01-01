@@ -1,5 +1,5 @@
 import { TreeNodeInfo } from "@blueprintjs/core";
-import { Audit, Corpus } from "@nlp-manager/shared";
+import { Audit, Corpus, ModelType } from "@nlp-manager/shared";
 import {
   AnyAction,
   CaseReducerActions,
@@ -88,6 +88,11 @@ export const reducers = {
         return {
           id: `nlp.cores.user.${id}`,
           label: `${id} - ${name}`,
+          nodeData: {
+            type: "file",
+            editor: "corpus",
+            file: id
+          },
         };
       });
     }

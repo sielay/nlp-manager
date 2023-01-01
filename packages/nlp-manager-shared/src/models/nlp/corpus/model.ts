@@ -2,6 +2,7 @@ import { getDB } from "../../../nlpManagerBackend";
 import { Audit, CorpusFile } from "../../../types";
 import { Model, ReturnDict } from "trilogy";
 import { Corpus, CorpusEntry } from "./types";
+import { v4 } from "uuid";
 
 export interface RecordType extends ReturnDict {
   name: string;
@@ -9,7 +10,7 @@ export interface RecordType extends ReturnDict {
   fileName: string;
   createdAt: Date;
   data: object;
-  id: number;
+  id: string;
 }
 
 let model: Model<RecordType>;
@@ -20,8 +21,8 @@ const cast = (record: RecordType & Audit): Corpus & Audit => {
     name,
     locale,
     data: data as CorpusEntry[],
-    id: id,
-    createdAt
+    id,
+    createdAt,
   } satisfies Corpus & Audit;
   return result;
 };
@@ -35,7 +36,7 @@ const getModel = async () => {
       fileName: String,
       createdAt: Date,
       data: Array,
-      id: "increments",
+      id: String,
     })) as unknown as Model<RecordType>;
   }
   return model;
@@ -53,7 +54,7 @@ export const insertCorpus = async (corpus: CorpusFile) => {
     createdAt: new Date(),
     fileName,
     data,
-    id: 0
+    id: v4(),
   });
 };
 

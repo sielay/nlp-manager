@@ -1,17 +1,22 @@
+import { EditorEvent } from "../editor/types";
 import { useEditorsContext } from "./context";
 
 export const useEditors = () => {
   const context = useEditorsContext();
-  const [state, dispatch, { addEditor, closeEditor, setActive }] = context;
+  const [state, dispatch, { addEditor, closeEditor, setActive, onMessage }] =
+    context;
   return {
     state,
-    addEditor: (type: string, data: unknown) =>
-      addEditor && dispatch(addEditor({ type, data })),
-    closeEditor: (index: number) => {
-      closeEditor && dispatch(closeEditor(index));
+    addEditor: (editor: string, file?: string) =>
+      addEditor && dispatch(addEditor({ editor, file })),
+    closeEditor: (instance: string) => {
+      closeEditor && dispatch(closeEditor(instance));
     },
-    setActive: (index: number) => {
-      setActive && dispatch(setActive(index));
+    setActive: (instance: string) => {
+      setActive && dispatch(setActive(instance));
+    },
+    onMessage: (instance: string, data: EditorEvent) => {
+      onMessage && dispatch(onMessage({ instance, data }));
     },
   };
 };

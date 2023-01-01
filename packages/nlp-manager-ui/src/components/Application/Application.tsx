@@ -5,9 +5,11 @@ import { EditorsProvider } from "../../hooks/editors/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ErrorBoundary } from "../ErrorBounduary";
 
+const CorpusEditor = lazy(() => import("../../editors/CorpusEditor"));
 const Frame = lazy(() => import("../Frame"));
 
 const editors: Record<string, ComponentType> = {
+  "/ui/corpus": () => <CorpusEditor />,
   "/ui": () => <div>Anything else</div>,
   "/": Frame,
 };

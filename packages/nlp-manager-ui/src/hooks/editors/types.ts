@@ -1,19 +1,16 @@
-export enum EditorState {
-  LOADING = "loading",
-  OPEN = "open",
-  MODIFIED = "open:modified",
-  SAVING = "saving",
-  CLOSING = "closing",
-}
+import { EditorStatus } from "../editor/consts";
+import { AppEvent } from "../editor/types";
 
 export interface Editor {
-  type: string;
-  data: unknown;
+  instance: string;
+  editor: string;
+  file?: string;
   title: string;
-  state: EditorState;
+  state: EditorStatus;
+  nextEvent?: AppEvent;
 }
 
 export interface EditorsContextState {
-  activeEditor?: number;
+  activeEditor?: string;
   editors: Editor[];
 }

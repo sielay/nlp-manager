@@ -3,14 +3,17 @@ import {
   Button,
   ButtonGroup,
   Icon,
+  Menu,
+  MenuItem,
   Navbar,
   Tab,
   Tabs,
 } from "@blueprintjs/core";
+import { Popover2 } from "@blueprintjs/popover2";
 import { FC } from "react";
 import { useCorpora } from "../../hooks";
 import { useEditors } from "../../hooks/editors";
-import { EditorInstance } from "../EditorInstance";
+import { EditorFrame } from "../EditorFrame";
 import { Sidebar } from "../Sidebar";
 import "./Frame.scss";
 
@@ -39,7 +42,18 @@ export const Frame: FC<unknown> = () => {
             >
               Import file
             </Button>
-            <Button onClick={() => addEditor("test", 12)}>Add editor</Button>
+            <Popover2
+              content={
+                <Menu>
+                  <MenuItem
+                    onClick={() => addEditor("corpus", undefined)}
+                    label="Corpus"
+                  />
+                </Menu>
+              }
+            >
+              <Button icon="add" rightIcon="chevron-down" />
+            </Popover2>
           </ButtonGroup>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
@@ -61,19 +75,25 @@ export const Frame: FC<unknown> = () => {
         <div className="Frame__content">
           <div className="Frame__content__tabs">
             <Tabs selectedTabId={activeEditor}>
-              {editors.map(({ title }, index) => {
+              {editors.map(({ title, instance }) => {
                 return (
-                  <Tab id={index} key={index}>
-                    <small onClick={() => setActive(index)}>{title}</small>
-                    <Icon icon="cross" onClick={() => closeEditor(index)} />
+                  <Tab id={instance} key={instance}>
+                    <small onClick={() => setActive(instance)}>{title}</small>
+                    <Icon icon="cross" onClick={() => closeEditor(instance)} />
                   </Tab>
                 );
               })}
             </Tabs>
           </div>
           <div className="Frame__content__editor">
-            {editors.map(({ type }, index) => {
-              return <EditorInstance key={index} editor={type} id={index} />;
+            {editors.map(({ editor, instance }) => {
+              return (
+                <EditorFrame
+                  key={instance}
+                  editorApp={editor}
+                  instance={instance}
+                />
+              );
             })}
           </div>
         </div>
