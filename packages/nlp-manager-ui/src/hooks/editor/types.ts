@@ -11,9 +11,9 @@ interface BaseEditorPayloadEvent<Type extends EditorEventType, D> {
   data: D;
 }
 
-export type EditorEvent =
-  | BaseEditorEvent<EditorEventType.INITED>
-  | BaseEditorEvent<EditorEventType.CLOSED>;
+export type EditorEvent = BaseEditorEvent<
+  EditorEventType.INITED | EditorEventType.CLOSED | EditorEventType.LOADED
+>;
 
 interface BaseAppEvent<Type extends AppEventType> {
   type: Type;
@@ -26,9 +26,7 @@ interface BaseAppPayloadEvent<Type extends AppEventType, D> {
 
 export type AppEvent =
   | BaseAppPayloadEvent<AppEventType.LOAD, string>
-  | BaseAppEvent<AppEventType.NEW>
-  | BaseAppEvent<AppEventType.CLOSE>
-  | BaseAppEvent<AppEventType.DESTROY>;
+  | BaseAppEvent<AppEventType.NEW | AppEventType.CLOSE | AppEventType.DESTROY>;
 
 export type FrameEvent = AppEvent | EditorEvent;
 

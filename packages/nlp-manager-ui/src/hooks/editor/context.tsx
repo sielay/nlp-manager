@@ -10,7 +10,7 @@ import { isAppEvent } from "./utils";
 
 export const EditorContext = createContext<UseEditorResult>({
   state: { status: EditorStatus.INITIAL },
-  actions: {}
+  actions: {},
 });
 
 export const reducers = {};
@@ -49,6 +49,8 @@ export function EditorProvider({
       /* istanbul ignore next */
       return;
     }
+
+    console.log("IN EDITOR", type, data);
 
     // If you use property rather than destructed const
     // TypeScript can deduct the other properties of the event
@@ -111,6 +113,7 @@ export function EditorProvider({
         actions: {
           setLoaded: () => {
             dispatch(setLoaded());
+            sendPostMessage({ type: EditorEventType.LOADED });
           },
           setClosed: () => {
             dispatch(setClosed());

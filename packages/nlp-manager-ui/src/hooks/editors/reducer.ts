@@ -79,9 +79,11 @@ export const reducers = {
       payload: {
         instance,
         data: { type },
+        data,
       },
     }: PayloadAction<{ instance: string; data: EditorEvent }>
   ) => {
+    console.log("IN APP", type, data);
     switch (type) {
       case EditorEventType.INITED: {
         const editor = selectEditor(state, instance);

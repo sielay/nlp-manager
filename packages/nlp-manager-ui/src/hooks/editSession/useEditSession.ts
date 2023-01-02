@@ -18,7 +18,7 @@ export const useEditSession = <T>({
   const enabled = !appNotReadyStates.includes(status);
   const [localState, setLocalState] = useState<T | undefined>();
 
-  useEffect(() => {
+  useEffect(() => {    
     if (enabled && !localState) {
       if (!id) {
         setLocalState(newGenerator());
