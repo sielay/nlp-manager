@@ -7,8 +7,8 @@ export const useEditors = () => {
     context;
   return {
     state,
-    addEditor: (editor: string, file?: string) =>
-      addEditor && dispatch(addEditor({ editor, file })),
+    addEditor: (editor: string, id?: string) =>
+      addEditor && dispatch(addEditor({ editor, id })),
     closeEditor: (instance: string) => {
       closeEditor && dispatch(closeEditor(instance));
     },

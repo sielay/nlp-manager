@@ -120,6 +120,10 @@ export enum AppEventType {
   CHANGE_ACTIVE_ASSET = "nlpm:tab:change",
 }
 
+export const AppEventTypes = Object.values(
+  AppEventType
+) as readonly AppEventType[];
+
 /**
  * Events sent from the editor to the main app via window.postMessage
  */

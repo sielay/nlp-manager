@@ -1,7 +1,7 @@
 import { getDB } from "../../../nlpManagerBackend";
 import { Audit, CorpusFile } from "../../../types";
 import { Model, ReturnDict } from "trilogy";
-import { Corpus, CorpusEntry } from "./types";
+import { AuditedCorpus, Corpus, CorpusEntry } from "./types";
 import { v4 } from "uuid";
 
 export interface RecordType extends ReturnDict {
@@ -15,7 +15,7 @@ export interface RecordType extends ReturnDict {
 
 let model: Model<RecordType>;
 
-const cast = (record: RecordType & Audit): Corpus & Audit => {
+const cast = (record: RecordType & Audit): AuditedCorpus => {
   const { name, locale, createdAt, id, data } = record;
   const result = {
     name,
@@ -23,7 +23,7 @@ const cast = (record: RecordType & Audit): Corpus & Audit => {
     data: data as CorpusEntry[],
     id,
     createdAt,
-  } satisfies Corpus & Audit;
+  } satisfies AuditedCorpus;
   return result;
 };
 
@@ -62,4 +62,10 @@ export const getCorpora = async () => {
   const model = await getModel();
   const records = await model.find();
   return records.map(cast);
+};
+
+export const getCorpus = async (id: string) => {
+  const model = await getModel();
+  const record = await model.findOne({ id });
+  return record ? cast(record) : undefined;
 };

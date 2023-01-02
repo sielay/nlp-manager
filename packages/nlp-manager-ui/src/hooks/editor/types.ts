@@ -1,11 +1,6 @@
+import { CaseReducerActionsVoid } from "../types";
 import { AppEventType, EditorEventType, EditorStatus } from "./consts";
-
-export type ExternalEditorStatuss =
-  | EditorStatus.CLOSED
-  | EditorStatus.OPEN
-  | EditorStatus.MODIFIED
-  | EditorStatus.SAVING
-  | EditorStatus.SAVING_AND_CLOSING;
+import { Reducers } from "./reducer";
 
 interface BaseEditorEvent<Type extends EditorEventType> {
   type: Type;
@@ -32,15 +27,17 @@ interface BaseAppPayloadEvent<Type extends AppEventType, D> {
 export type AppEvent =
   | BaseAppPayloadEvent<AppEventType.LOAD, string>
   | BaseAppEvent<AppEventType.NEW>
-  | BaseAppEvent<AppEventType.CLOSE>;
+  | BaseAppEvent<AppEventType.CLOSE>
+  | BaseAppEvent<AppEventType.DESTROY>;
 
 export type FrameEvent = AppEvent | EditorEvent;
 
 export interface UseEditorResult {
-  status: EditorStatus;
+  state: EditorState;
+  actions: Partial<CaseReducerActionsVoid<Reducers>>;
 }
 
 export interface EditorState {
   status: EditorStatus;
-  file?: string;
+  id?: string;
 }

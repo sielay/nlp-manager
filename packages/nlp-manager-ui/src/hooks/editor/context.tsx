@@ -1,19 +1,16 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { CaseReducerActions } from "@reduxjs/toolkit";
+import { createContext, PropsWithChildren, useEffect, useRef } from "react";
 import { ErrorBoundary } from "../../components/ErrorBounduary";
 import { AppEventType, EditorEventType, EditorStatus } from "./consts";
 import { RecoveryEditor } from "./RecoveryEditor";
 import { useEditorReducer } from "./reducer";
 import { sendPostMessage } from "./sendPostMessage";
-import { AppEvent, EditorState, UseEditorResult } from "./types";
+import { AppEvent, UseEditorResult } from "./types";
+import { isAppEvent } from "./utils";
 
 export const EditorContext = createContext<UseEditorResult>({
-  status: EditorStatus.INITIAL,
+  state: { status: EditorStatus.INITIAL },
+  actions: {}
 });
 
 export const reducers = {};
@@ -23,11 +20,12 @@ export function EditorProvider({
   onDestroy,
 }: PropsWithChildren<{ onDestroy?: VoidFunction }>): JSX.Element {
   const [
-    { status },
+    state,
     dispatch,
-    { setClosed, setSavingAndClose, setInited },
+    { setClosed, setSavingAndClose, setInited, loadFile, newFile, setLoaded },
   ] = useEditorReducer();
   const ref = useRef<boolean>(false);
+  const { status } = state;
 
   useEffect(() => {
     setInited && dispatch(setInited());
@@ -36,14 +34,12 @@ export function EditorProvider({
 
   const handler = (event: MessageEvent<AppEvent>) => {
     const {
-      data: { type },
       data,
+      data: { type },
     } = event;
 
     /* istanbul ignore next */
-    if (
-      (event as MessageEvent<unknown>).data === "blueprint-table-post-message"
-    ) {
+    if (!isAppEvent(event)) {
       /* istanbul ignore next */
       return;
     }
@@ -54,23 +50,19 @@ export function EditorProvider({
       return;
     }
 
-    console.log("event data", data);
-
-    // todo: check if we need those limbo states
-    switch (type) {
+    // If you use property rather than destructed const
+    // TypeScript can deduct the other properties of the event
+    // without cassting
+    switch (data.type) {
       case AppEventType.NEW: {
-
+        dispatch(newFile());
         break;
       }
       case AppEventType.LOAD: {
-
+        dispatch(loadFile(data.data));
         break;
       }
       case AppEventType.CLOSE: {
-        // useCallback would cache here the first version
-        // of the state, but we have a cool feature to avoid
-        // it
-        // dispatchFn((state: EditorState, dispatch) => {
         switch (status) {
           case EditorStatus.INITED:
           case EditorStatus.OPEN: {
@@ -83,14 +75,16 @@ export function EditorProvider({
             return;
           }
         }
-        console.error("Unknown", status, event);
-        // });
+        console.error("Unheld event type", data.type, data);
         break;
       }
-      // case AppEventType.DESTROY: {
-      //   // dispatch(EditorStat.DESTROYED);
-      //   break;
-      // }
+      case AppEventType.DESTROY: {
+        // This has to be implemented by a specific editor
+        break;
+      }
+      default: {
+        console.error("Unheld event type", type, data);
+      }
     }
   };
 
@@ -113,7 +107,27 @@ export function EditorProvider({
   return (
     <EditorContext.Provider
       value={{
-        status,
+        state,
+        actions: {
+          setLoaded: () => {
+            dispatch(setLoaded());
+          },
+          setClosed: () => {
+            dispatch(setClosed());
+          },
+          setInited: () => {
+            dispatch(setInited());
+          },
+          setSavingAndClose: () => {
+            dispatch(setSavingAndClose());
+          },
+          newFile: () => {
+            dispatch(newFile());
+          },
+          loadFile: (id: string) => {
+            dispatch(loadFile(id));
+          },
+        },
       }}
     >
       <ErrorBoundary onErrorComponent={RecoveryEditor}>

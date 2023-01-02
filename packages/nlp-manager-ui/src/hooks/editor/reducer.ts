@@ -22,17 +22,23 @@ export const reducers = {
   },
   loadFile: (state: EditorState, { payload }: PayloadAction<string>) => {
     state.status = EditorStatus.LOADING;
-    state.file = payload;
+    state.id = payload;
   },
   newFile: (state: EditorState) => {
     state.status = EditorStatus.LOADING;
-    state.file = undefined;
+    state.id = undefined;
+  },
+  setLoaded: (state: EditorState) => {
+    state.status = EditorStatus.OPEN;
   },
 };
 
+export type Reducers = typeof reducers;
+export type ReducerKeys = keyof Reducers;
+
 const INITIAL_STATE: EditorState = {
   status: EditorStatus.INITIAL,
-  file: undefined,
+  id: undefined,
 };
 
 export type UseEditorReducerResult = [
@@ -42,7 +48,7 @@ export type UseEditorReducerResult = [
 ];
 
 export const useEditorReducer = (): UseEditorReducerResult => {
-  const slice = createSlice<EditorState, typeof reducers>({
+  const slice = createSlice<EditorState, Reducers>({
     name: "Editor",
     reducers,
     initialState: INITIAL_STATE,

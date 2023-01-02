@@ -5,7 +5,7 @@ export enum NodeDataType {
 export interface FileNodeData {
   type: NodeDataType.FILE;
   editor: string;
-  file: string;
+  id: string;
 }
 
 export type NodeData = FileNodeData;

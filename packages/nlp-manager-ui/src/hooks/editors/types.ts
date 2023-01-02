@@ -4,7 +4,7 @@ import { AppEvent } from "../editor/types";
 export interface Editor {
   instance: string;
   editor: string;
-  file?: string;
+  id?: string;
   title: string;
   state: EditorStatus;
   nextEvent?: AppEvent;

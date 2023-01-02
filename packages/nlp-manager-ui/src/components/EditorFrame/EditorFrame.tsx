@@ -12,6 +12,7 @@ import {
   EditorEvent,
   EditorEventType,
   EditorEventTypes,
+  isEditorEvent,
 } from "../../hooks/editor";
 import { useEditors } from "../../hooks/editors";
 import { selectEditor } from "../../hooks/editors/selectors";
@@ -43,11 +44,6 @@ const MemoizedIframe: FC<
   ))
 );
 
-const isEditorEvent = (data: EditorEvent | string): data is EditorEvent => {
-  if (typeof data === "string") return false;
-  return EditorEventTypes.includes(data.type);
-};
-
 export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp }) => {
   const [src, setSrc] = useState<string>(`/ui/${editorApp}`);
   const ref = useRef<HTMLIFrameElement>(null);
@@ -56,9 +52,8 @@ export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp }) => {
   const { nextEvent } = editor || {};
 
   const handler = useCallback(
-    (event: MessageEvent<EditorEvent | string>) => {
-      const { data } = event;
-      isEditorEvent(data) && onMessage && onMessage(instance, data);
+    (event: MessageEvent<EditorEvent>) => {
+      isEditorEvent(event) && onMessage && onMessage(instance, event.data);
     },
     [onMessage, instance]
   );

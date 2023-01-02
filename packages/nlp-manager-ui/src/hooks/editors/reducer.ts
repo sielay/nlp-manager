@@ -14,16 +14,14 @@ import { EditorsContextState } from "./types";
 export const reducers = {
   addEditor: (
     state: EditorsContextState,
-    {
-      payload: { editor, file },
-    }: PayloadAction<{ editor: string; file?: string }>
+    { payload: { editor, id } }: PayloadAction<{ editor: string; id?: string }>
   ) => {
     state.editors.push({
       instance: v4(),
       editor,
       title: `Loading ${editor}...`,
       state: EditorStatus.LOADING,
-      file,
+      id,
     });
   },
   editorLoaded: (
@@ -88,11 +86,11 @@ export const reducers = {
       case EditorEventType.INITED: {
         const editor = selectEditor(state, instance);
         if (!editor) return;
-        const { file } = editor;
-        if (file) {
+        const { id } = editor;
+        if (id) {
           editor.nextEvent = {
             type: AppEventType.LOAD,
-            data: file,
+            data: id,
           };
           return;
         }
