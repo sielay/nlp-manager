@@ -1,4 +1,5 @@
 import { Button, InputGroup } from "@blueprintjs/core";
+import { Navbar, NonIdealState, Tab, Tabs } from "@blueprintjs/core/lib/esm/components";
 import { Cell, Column, Table2 } from "@blueprintjs/table";
 import { Corpus } from "@nlp-manager/shared";
 import { FC, useEffect, useState } from "react";
@@ -190,18 +191,8 @@ export const CorpusEditor: FC<unknown> = () => {
       }
     }
   }, [status]);
-  return (
-    <div>
-      <pre>{status}</pre>
-      <pre>{id}</pre>
-      <pre>{JSON.stringify(localState)}</pre>
-    </div>
-  );
-  /*
-  
-  // TODO: one to one hook
-  const { data } = useCorpora();
-  const corpus = data?.find(({ id: corpusId }) => id === corpusId);
+
+  const corpus = localState;
   if (!corpus) {
     return <NonIdealState title="Corpus not found" icon="unknown-vehicle" />;
   }
@@ -222,5 +213,5 @@ export const CorpusEditor: FC<unknown> = () => {
       {tab === "answers" && <Answers corpus={corpus} />}
       {tab === "debug" && <Debug corpus={corpus} />}
     </div>
-  );*/
+  );
 };

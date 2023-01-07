@@ -101,6 +101,12 @@ export const reducers = {
         };
         break;
       }
+      case EditorEventType.LOADED: {
+        const editor = selectEditor(state, instance);
+        if (!editor) return;
+        editor.state = EditorStatus.OPEN;
+        return;
+      }
       case EditorEventType.CLOSED: {
         const editorIndex = findEditor(state, instance);
         if (editorIndex === -1) return;

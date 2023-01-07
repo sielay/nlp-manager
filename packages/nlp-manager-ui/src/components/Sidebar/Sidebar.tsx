@@ -18,7 +18,8 @@ export const Sidebar: FC<unknown> = () => {
     if (!node.nodeData) return;
     const data = node.nodeData as NodeData;
     if (data.type === NodeDataType.FILE) {
-      addEditor(data.editor, data.id);
+      console.log(data);
+      addEditor(data.editor, data.file);
     }
   };
 

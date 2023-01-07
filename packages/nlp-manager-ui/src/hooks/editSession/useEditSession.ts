@@ -14,19 +14,25 @@ export const useEditSession = <T>({
     state: { status, id },
     actions,
   } = useEditor();
-
   const enabled = !appNotReadyStates.includes(status);
   const [localState, setLocalState] = useState<T | undefined>();
+  const { data } = serverHook(id);
+
 
   useEffect(() => {    
-    if (enabled && !localState) {
+    if (status === EditorStatus.LOADING && !localState) {
       if (!id) {
         setLocalState(newGenerator());
         actions.setLoaded?.();
         return;
       }
+      // react-query may return the data later
+      if (data) {
+        setLocalState(data);
+        actions.setLoaded?.();
+      }
     }
-  }, [enabled, localState, id]);
+  }, [status, localState, id, data]);
 
   return {
     id,

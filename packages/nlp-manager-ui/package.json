@@ -35,11 +35,11 @@
     "uuid": "^9.0.0"
   },
   "scripts": {
-    "start": "SUPPRESS_NO_CONFIG_WARNING=true craco start",
-    "electron": "SUPPRESS_NO_CONFIG_WARNING=true BROWSER=none API_HOST=localhost API_PORT=8080 PORT=8082 craco start",
+    "start": "cross-env SUPPRESS_NO_CONFIG_WARNING=true craco start",
+    "electron": "cross-env SUPPRESS_NO_CONFIG_WARNING=true BROWSER=none API_HOST=localhost API_PORT=8080 PORT=8082 craco start",
     "dist": "rm -rf ./dist && rm *.tsbuildinfo || true && mkdir dist && tsc --project tsconfig.dist.json",
     "build": "craco build",
-    "build:electron": "PUBLIC_URL=./ craco build",
+    "build:electron": "cross-env PUBLIC_URL=./ craco build",
     "test:dev": "craco test --coverage --watchAll --detectOpenHandles",
     "test": "./node_modules/.bin/craco test --coverage --detectOpenHandles --passWithNoTests",
     "eject": "react-scripts eject",
@@ -105,6 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "autoprefixer": "^10.4.4",
     "craco-interpolate-html-plugin": "^0.0.6",
+    "cross-env": "^7.0.3",
     "http": "npm:stream-http",
     "postcss": "^8.4.12",
     "sass": "^1.50.0",

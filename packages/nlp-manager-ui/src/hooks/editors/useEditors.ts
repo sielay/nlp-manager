@@ -7,8 +7,10 @@ export const useEditors = () => {
     context;
   return {
     state,
-    addEditor: (editor: string, id?: string) =>
-      addEditor && dispatch(addEditor({ editor, id })),
+    addEditor: (editor: string, id?: string) => {
+      console.log(`Add editor ${editor} with asset ${id}`);
+      addEditor && dispatch(addEditor({ editor, id }));
+    },
     closeEditor: (instance: string) => {
       closeEditor && dispatch(closeEditor(instance));
     },

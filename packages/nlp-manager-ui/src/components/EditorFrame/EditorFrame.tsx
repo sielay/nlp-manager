@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React, {
   FC,
   forwardRef,
@@ -6,18 +7,16 @@ import React, {
   useCallback,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
 import {
-  EditorEvent,
-  EditorEventType,
-  EditorEventTypes,
-  isEditorEvent,
+  EditorEvent, isEditorEvent
 } from "../../hooks/editor";
 import { useEditors } from "../../hooks/editors";
 import { selectEditor } from "../../hooks/editors/selectors";
 
 export interface EditorFrameProps {
+  active: boolean;
   instance: string;
   editorApp: string;
 }
@@ -27,7 +26,7 @@ const MemoizedIframe: FC<
     React.IframeHTMLAttributes<HTMLIFrameElement>,
     HTMLIFrameElement
   > &
-    RefAttributes<HTMLIFrameElement>
+  RefAttributes<HTMLIFrameElement>
 > = memo(
   forwardRef((props, ref) => (
     <iframe
@@ -44,7 +43,7 @@ const MemoizedIframe: FC<
   ))
 );
 
-export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp }) => {
+export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp, active }) => {
   const [src, setSrc] = useState<string>(`/ui/${editorApp}`);
   const ref = useRef<HTMLIFrameElement>(null);
   const { onMessage, state } = useEditors();
@@ -75,7 +74,7 @@ export const EditorFrame: FC<EditorFrameProps> = ({ instance, editorApp }) => {
       ref={ref}
       title={"Loading..."}
       src={src}
-      className="border w-full h-full"
+      className={cx("border w-full h-full absolute top-0 left-0", active && 'invisible')}
     ></MemoizedIframe>
   );
 };

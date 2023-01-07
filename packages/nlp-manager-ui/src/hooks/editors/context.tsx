@@ -1,5 +1,5 @@
-import { createContext, PropsWithChildren, useContext } from "react";
 import { UseEditorReducerResult, useEditorsReducer } from "./reducer";
+import { createContext, PropsWithChildren, useContext } from "react";
 
 const NOOP = () => {
   /* not inited */

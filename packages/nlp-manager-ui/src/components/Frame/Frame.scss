@@ -13,7 +13,7 @@
       @apply flex-grow-0 flex-shrink-0 h-8 border-b mx-2;
     }
     &__editor {
-      @apply flex-grow;
+      @apply flex-grow relative;
     }
   }
 }

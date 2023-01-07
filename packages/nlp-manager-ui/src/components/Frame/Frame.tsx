@@ -1,17 +1,15 @@
 import {
   Alignment,
   Button,
-  ButtonGroup,
-  Icon,
-  Menu,
+  ButtonGroup, Menu,
   MenuItem,
   Navbar,
   Tab,
-  Tabs,
+  Tabs
 } from "@blueprintjs/core";
 import { Popover2 } from "@blueprintjs/popover2";
 import { FC } from "react";
-import { useCorpora } from "../../hooks";
+import { LoadingStates, useCorpora } from "../../hooks";
 import { useEditors } from "../../hooks/editors";
 import { EditorFrame } from "../EditorFrame";
 import { Sidebar } from "../Sidebar";
@@ -75,11 +73,11 @@ export const Frame: FC<unknown> = () => {
         <div className="Frame__content">
           <div className="Frame__content__tabs">
             <Tabs selectedTabId={activeEditor}>
-              {editors.map(({ title, instance }) => {
+              {editors.map(({ title, instance, state }) => {
                 return (
                   <Tab id={instance} key={instance}>
                     <small onClick={() => setActive(instance)}>{title}</small>
-                    <Icon icon="cross" onClick={() => closeEditor(instance)} />
+                    <Button minimal small icon="cross" onClick={() => closeEditor(instance)} disabled={LoadingStates.includes(state)}  />
                   </Tab>
                 );
               })}
@@ -89,6 +87,7 @@ export const Frame: FC<unknown> = () => {
             {editors.map(({ editor, instance }) => {
               return (
                 <EditorFrame
+                  active={activeEditor === instance}
                   key={instance}
                   editorApp={editor}
                   instance={instance}

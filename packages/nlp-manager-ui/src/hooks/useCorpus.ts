@@ -16,8 +16,9 @@ export const useCorpus: QueryHook<AuditedCorpus> = (id?: string) => {
     async () => {
       // react-query has some dumb update to typings
       const response = await window.nlpManagerBackend?.getCorpus(
-        id as unknown as string
+        id
       );
+      console.log('response in hook', response);
       return response;
     },
     {

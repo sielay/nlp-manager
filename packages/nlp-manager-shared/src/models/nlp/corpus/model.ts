@@ -64,8 +64,12 @@ export const getCorpora = async () => {
   return records.map(cast);
 };
 
-export const getCorpus = async (id: string) => {
+export const getCorpus = async (id?: string) => {
+  if (!id) return undefined;
   const model = await getModel();
+  console.log('search by id', id);
   const record = await model.findOne({ id });
+  console.log((await getCorpora()).map(({id}) => id));
+  console.log(record);
   return record ? cast(record) : undefined;
 };
