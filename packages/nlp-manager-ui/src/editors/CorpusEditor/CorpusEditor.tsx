@@ -1,20 +1,12 @@
-import {
-  Button,
-  InputGroup,
-  Navbar,
-  NonIdealState,
-  Tab,
-  Tabs,
-} from "@blueprintjs/core";
+import { Button, InputGroup } from "@blueprintjs/core";
+import { Navbar, NonIdealState, Tab, Tabs } from "@blueprintjs/core/lib/esm/components";
 import { Cell, Column, Table2 } from "@blueprintjs/table";
 import { Corpus } from "@nlp-manager/shared";
-import { FC, useState } from "react";
-import { useCorpora } from "../../hooks";
+import { FC, useEffect, useState } from "react";
+import { useCorpus } from "../../hooks";
+import { EditorStatus } from "../../hooks/editor";
+import { useEditSession } from "../../hooks/editSession";
 import { useDebugger } from "./useDebugger";
-
-export interface CorpusEditorProps {
-  id?: number;
-}
 
 export interface TabProps {
   corpus: Corpus;
@@ -176,11 +168,31 @@ export const Debug: FC<TabProps> = ({ corpus }) => {
   );
 };
 
-export const CorpusEditor: FC<CorpusEditorProps> = ({ id }) => {
+export const newGenerator = (): Corpus => {
+  return {
+    name: "Unnamed",
+    locale: "en-En",
+    data: [],
+  };
+};
+
+export const CorpusEditor: FC<unknown> = () => {
   const [tab, setTab] = useState<string>("intents");
-  // TODO: one to one hook
-  const { data } = useCorpora();
-  const corpus = data?.find(({ id: corpusId }) => id === corpusId);
+
+  const { localState, id, status } = useEditSession<Corpus>({
+    newGenerator,
+    serverHook: useCorpus,
+  });
+  useEffect(() => {
+    switch (status) {
+      case EditorStatus.LOADING: {
+        if (id) {
+        }
+      }
+    }
+  }, [status]);
+
+  const corpus = localState;
   if (!corpus) {
     return <NonIdealState title="Corpus not found" icon="unknown-vehicle" />;
   }

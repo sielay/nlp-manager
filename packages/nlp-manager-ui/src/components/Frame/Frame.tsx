@@ -1,12 +1,28 @@
-import { Alignment, Button, ButtonGroup, Navbar } from "@blueprintjs/core";
+import {
+  Alignment,
+  Button,
+  ButtonGroup, Menu,
+  MenuItem,
+  Navbar,
+  Tab,
+  Tabs
+} from "@blueprintjs/core";
+import { Popover2 } from "@blueprintjs/popover2";
 import { FC } from "react";
-import CorpusEditor from "../../editors/CorpusEditor";
-import { useCorpora } from "../../hooks";
+import { LoadingStates, useCorpora } from "../../hooks";
+import { useEditors } from "../../hooks/editors";
+import { EditorFrame } from "../EditorFrame";
 import { Sidebar } from "../Sidebar";
 import "./Frame.scss";
 
 export const Frame: FC<unknown> = () => {
   const { refetch, data } = useCorpora();
+  const {
+    state: { editors, activeEditor },
+    addEditor,
+    closeEditor,
+    setActive,
+  } = useEditors();
   return (
     <div className="Frame">
       <Navbar>
@@ -24,6 +40,18 @@ export const Frame: FC<unknown> = () => {
             >
               Import file
             </Button>
+            <Popover2
+              content={
+                <Menu>
+                  <MenuItem
+                    onClick={() => addEditor("corpus", undefined)}
+                    label="Corpus"
+                  />
+                </Menu>
+              }
+            >
+              <Button icon="add" rightIcon="chevron-down" />
+            </Popover2>
           </ButtonGroup>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
@@ -43,7 +71,30 @@ export const Frame: FC<unknown> = () => {
           <Sidebar />
         </div>
         <div className="Frame__content">
-          {data && data.length > 0 && <CorpusEditor id={data[0].id} />}
+          <div className="Frame__content__tabs">
+            <Tabs selectedTabId={activeEditor}>
+              {editors.map(({ title, instance, state }) => {
+                return (
+                  <Tab id={instance} key={instance}>
+                    <small onClick={() => setActive(instance)}>{title}</small>
+                    <Button minimal small icon="cross" onClick={() => closeEditor(instance)} disabled={LoadingStates.includes(state)}  />
+                  </Tab>
+                );
+              })}
+            </Tabs>
+          </div>
+          <div className="Frame__content__editor">
+            {editors.map(({ editor, instance }) => {
+              return (
+                <EditorFrame
+                  active={activeEditor === instance}
+                  key={instance}
+                  editorApp={editor}
+                  instance={instance}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

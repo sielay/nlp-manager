@@ -36,8 +36,6 @@ export const readFile = (file: File): Promise<FileLike> => {
         const result = event?.target?.result;
         const mayBeJson = JsonParseTypes.includes(file.type);
         const content = mayBeJson ? JSON.parse(result as string) : result;
-        // eslint-disable-next-line no-debugger
-        debugger;
         const type = guessDataType(content, file.type);
         resolve({
           name: file.name,

@@ -1,7 +1,7 @@
-export * from './fs'
-export * from './models'
+export * from "./fs";
+export * from "./models";
 
 export interface Audit {
-  id: number
-  createdAt: Date
+  id: string;
+  createdAt: Date;
 }

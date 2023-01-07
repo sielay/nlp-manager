@@ -1,3 +1,5 @@
+import { Audit } from "../../../types";
+
 export interface CorpusEntry {
   intent: string;
   utterances: string[];
@@ -9,3 +11,5 @@ export interface Corpus extends Record<string, unknown> {
   locale: string;
   data: CorpusEntry[];
 }
+
+export type AuditedCorpus = Corpus & Audit;
