@@ -26,6 +26,7 @@ module.exports = {
           patterns: [
             {
               from: "../../node_modules/sql.js/dist/sql-wasm.wasm",
+              to: "static/js"
             },
           ],
         })
